@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Añadir producto</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row class="pb-4">
+        <ion-column class="w-full">
+          <ion-input
+            formControlName="name"
+            mode="md"
+            label="Nombre"
+            labelPlacement="floating"
+            clearInput="true"
+            fill="outline"
+            placeholder="Samarreta, pantalons..."
+            color="primary"
+            shape="round"
+            >
+          </ion-input>
+        </ion-column>
+      </ion-row>
+      <ion-row class="pb-4">
+        <ion-column class="w-full">
+          <ion-input
+            formControlName="price"
+            mode="md"
+            label="Precio"
+            labelPlacement="floating"
+            clearInput="true"
+            fill="outline"
+            placeholder="3, 5, 10..."
+            color="primary"
+            shape="round"
+            type="number">
+          </ion-input>
+        </ion-column>
+      </ion-row>
+      <ion-row>
+        <ion-column>
+          <ion-button (click)="uploadPhoto()">Subir foto</ion-button>
+
+          <ion-img *ngIf="form.get('photo')?.value"[src]="form.get('photo')?.value"></ion-img>
+        </ion-column>
+      </ion-row>
+      <ion-row class="pb-4">
+        <ion-column class="w-full">
+          <ion-select label="Tipo producto" formControlName="typeProduct" placeholder="Escoge tipo producto">
+            <ion-select-option value="normal">Normal</ion-select-option>
+            <ion-select-option value="sizes">Con tallas</ion-select-option>
+          </ion-select>
+        </ion-column>
+      </ion-row>
+      <ion-row class="pb-4" *ngIf="form.get('typeProduct')?.value === TYPES_PRODUCT.NORMAL">
+        <ion-column class="w-full">
+          <ion-input
+            formControlName="quantity"
+            mode="md"
+            label="Unidades"
+            labelPlacement="floating"
+            clearInput="true"
+            fill="outline"
+            placeholder="1, 2, 3..."
+            color="primary"
+            shape="round"
+            type="number">
+          </ion-input>
+        </ion-column>
+      </ion-row>
+      <ion-row *ngIf="form.get('typeProduct')?.value === TYPES_PRODUCT.SIZES">
+            <ion-card button class="ca ca-btn ion-no-margin flex text-center" (click)="createElement()">
+              <ion-card-content>
+                  <ion-icon name="add" size="large"></ion-icon>
+                </ion-card-content>
+            </ion-card>
+            <ion-card *ngFor="let size of sizes" mode="md" button class="ca px-4 flex">
+              <ion-card-title>
+                <ion-label>Talla: {{size.name}}</ion-label>
+                </ion-card-title>
+                <ion-card-subtitle class="text-white">
+                  <ion-label>Unidades: {{size.quantity}}</ion-label>
+                </ion-card-subtitle>
+
+            </ion-card>
+
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>

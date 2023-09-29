@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Ventas</ion-title>
+    <ion-back-button defaultHref="/home" slot="start"></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid class="h-full">
+    <ion-row class="h-64">
+      <ion-col size="6" *ngFor="let item of items">
+        <app-item-card [item]="item"></app-item-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <!-- <div class="bullet tr bg-red-500 z-50">
+      <span class="text-white">{{cart?.items?.length}}</span>
+    </div> -->
+    <ion-fab-button (click)="this.navCtrl.navigateForward('/tabs/' + selectedStore + '/sales/checkout')">
+      <ion-icon name="cart"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

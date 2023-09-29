@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cerrar</ion-button>
+    </ion-buttons>
+    <ion-title>Crear una tienda</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [disabled]="storeForm.invalid" [strong]="true">Confirmar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding" [formGroup]="storeForm">
+    <ion-input
+    formControlName="name"
+    mode="md"
+    label="Nombre"
+    labelPlacement="floating"
+    clearInput="true"
+    fill="outline"
+    placeholder="Nombre de la tienda"
+    color="primary"
+    shape="round"></ion-input>
+    <ion-button (click)="uploadPhoto()">Subir foto</ion-button>
+    <ion-img *ngIf="storeForm?.get('img')?.value"[src]="storeForm.get('img')?.value"></ion-img>
+</ion-content>

@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cerrar</ion-button>
+    </ion-buttons>
+    <ion-title>Unete a una tienda</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item *ngFor="let store of stores">
+    <ion-label>{{store.name}}</ion-label>
+    <ion-button (click)="joinStore(store)">{{store.isJoined ? 'Quitar' : 'Unirse'}}</ion-button>
+  </ion-item>
+</ion-content>

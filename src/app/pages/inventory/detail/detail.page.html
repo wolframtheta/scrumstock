@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{item?.name}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-content class="flex flex-col gap-3">
+      <ion-img [src]="item?.img"></ion-img>
+      <div class="flex flex-col gap-3">
+        <div class="text-xl">
+          <ion-label class="font-bold">Precio: </ion-label>
+          <ion-label>{{item?.price}}€</ion-label>
+        </div>
+        <div>
+          <ion-grid *ngIf="item?.sizes" class="text-center">
+            <ion-row>
+              <ion-col *ngFor="let col of columns" class="border-2 bg-gray-300 text-black">
+                <ion-label class="font-bold">{{col.title}}</ion-label>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let size of item?.sizes">
+              <ion-col class="border-2 flex place-items-center justify-center">
+                <ion-label class="text-lg">{{size.name}}</ion-label>
+              </ion-col>
+              <ion-col class="border-2 flex flex-row items-center justify-center gap-2">
+                <ion-button *ngIf="editMode" (click)="remove(size)" [disabled]="size.quantity <= 0">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+                <ion-label class="text-lg">{{size.quantity}}</ion-label>
+                <ion-button *ngIf="editMode" (click)="add(size)">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+          <div *ngIf="!item?.sizes" class="text-xl">
+            <ion-label class="font-bold">Cantidad: </ion-label>
+            <ion-label>{{item?.quantity}}</ion-label>
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,48 @@
+<ion-card class="h-64 flex flex-col justify-between">
+  <div [routerLink]="router.url.includes('inventory') ? [item.id] : router.url" [state]="{item}">
+    <ion-card-header>
+      <span>{{item.name}}</span>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-img [src]="item.img"></ion-img>
+      <div class="bullet br bg-green-500">
+        <span class="text-black">{{item.price}}€</span>
+      </div>
+      <div class="bullet bl bg-red-500">
+        <span class="text-white">{{item.quantity}}</span>
+      </div>
+    </ion-card-content>
+  </div>
+  <ion-card-footer *ngIf="router.url.includes('inventory') && editMode && !salesItem.idFather">
+    <ion-buttons class="flex justify-center text-center mb-6">
+      <ion-button size="large" (click)="remove($event)" [disabled]="item.quantity <= 0">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <!-- <ion-title>{{salesItem.quantityAdded}}</ion-title> -->
+      <ion-button size="large" (click)="add($event)">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-card-footer>
+
+  <ion-card-header *ngIf="router.url.includes('inventory') && editMode && salesItem?.idFather">
+    <ion-button [routerLink]="[item.id]" [state]="{item}">Modificar</ion-button>
+  </ion-card-header>
+
+  <ion-card-header *ngIf="router.url.includes('sales') && salesItem?.idFather">
+    <ion-button *ngIf="!salesItem?.isAdded" (click)="addItem()" [disabled]="!salesItem.quantity">Añadir</ion-button>
+    <ion-button *ngIf="salesItem?.isAdded" (click)="addItem()">Modificar</ion-button>
+  </ion-card-header>
+
+  <ion-card-header *ngIf="router.url.includes('sales') && !salesItem?.idFather">
+    <ion-buttons class="flex justify-center text-center mb-2">
+      <ion-button size="large" (click)="remove()" [disabled]="salesItem.quantityAdded <= 0">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <ion-title>{{salesItem.quantityAdded}}</ion-title>
+      <ion-button size="large" (click)="add()" [disabled]="salesItem.quantityAdded >= salesItem.quantity">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-card-header>
+</ion-card>

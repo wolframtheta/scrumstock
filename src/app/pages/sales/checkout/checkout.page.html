@@ -1,0 +1,78 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Carrito</ion-title>
+    <ion-back-button slot="start"></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid [formGroup]="form">
+    <ion-row>
+      <ion-input *ngIf="cart?.items?.length"
+            formControlName="client"
+            mode="md"
+            label="Cliente"
+            labelPlacement="floating"
+            clearInput="true"
+            fill="outline"
+            placeholder="Ermen"
+            color="primary"
+            shape="round"
+            type="text">
+          </ion-input>
+    </ion-row>
+    <app-ticket-sale [cart]="cart"></app-ticket-sale>
+    <ion-row class="flex text-center" *ngIf="!cart?.items?.length">
+      <ion-title>El carrito esta vacío</ion-title>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>
+
+<ion-footer>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="text-start">
+              Total
+            </ion-col>
+            <ion-col class="text-end">
+              {{ cart?.total }}€
+            </ion-col>
+          </ion-row>
+          <ion-row class="text-center">
+            <ion-col>
+              <ion-button color="danger" expand="block" id="cancel-alert">
+                Cancelar
+              </ion-button>
+            </ion-col>
+            <ion-col>
+              <ion-button color="primary" expand="block" id="confirm-alert" [disabled]="cart?.items?.length === 0 || form.invalid">
+                Confirmar
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+</ion-footer>
+
+<ion-alert
+  trigger="cancel-alert"
+  header="¿Estás seguro que quieres cancelar la venta?"
+  message="Se vaciará el carrito de la compra"
+  [buttons]="alertButtons"
+  (didDismiss)="cancelSale($event)"
+></ion-alert>
+
+<ion-alert
+  trigger="confirm-alert"
+  header="¿Estás seguro que quieres confirmar la venta?"
+  message="Se guardaran los datos en nuestro sistema"
+  [buttons]="alertButtons"
+  (didDismiss)="confirmSale($event)"
+></ion-alert>

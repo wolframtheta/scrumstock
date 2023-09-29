@@ -1,0 +1,31 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Resumen venta</ion-title>
+    <ion-back-button slot="start"></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-title>Cliente: {{log.client}}</ion-title>
+  <app-ticket-sale [cart]="log?.data"></app-ticket-sale>
+</ion-content>
+
+
+<ion-footer>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="text-start">
+              Total
+            </ion-col>
+            <ion-col class="text-end">
+              {{ log.data?.total }}€
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-title>
+    </ion-card-header>
+  </ion-card>
+</ion-footer>

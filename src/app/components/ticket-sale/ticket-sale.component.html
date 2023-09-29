@@ -1,0 +1,40 @@
+<ion-row *ngFor="let item of cart?.items">
+  <ion-col>
+    <ion-card>
+      <ion-card-header>
+        {{ item.name }} {{ item.size ? ' - ' + item.size : '' }} ({{ item.quantityAdded }})
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-img [src]="item.img"></ion-img>
+            </ion-col>
+            <ion-col class="self-center">
+              <ion-grid>
+                <ion-row class="text-center">
+                  <ion-col class="italic">
+                    PVP
+                  </ion-col>
+                  <ion-col class="italic">
+                    Total
+                  </ion-col>
+                </ion-row>
+                <ion-row class="text-center">
+                  <ion-col>
+                    {{ item.price }}€
+                  </ion-col>
+                  <ion-col class="text-red-400">
+                    {{ item.price * item.quantityAdded }}€
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-card-content>
+
+    </ion-card>
+  </ion-col>
+</ion-row>

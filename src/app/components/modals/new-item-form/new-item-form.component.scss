@@ -1,0 +1,7 @@
+ion-input {
+  @apply text-3xl text-gray-500;
+
+  .label-text-wrapper {
+    @apply italic
+  }
+}

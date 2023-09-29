@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>{{item.name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item *ngFor="let sizeItem of sizeItems">
+    <ion-label>{{sizeItem.size}}</ion-label>
+    <ion-button *ngIf="!sizeItem.quantityAdded" (click)="addItem(sizeItem)" [disabled]="!sizeItem.quantity || sizeItem.quantityAdded > sizeItem.quantity ">Añadir</ion-button>
+    <ion-buttons class="flex justify-center" *ngIf="sizeItem?.quantityAdded">
+      <ion-button (click)="removeItem(sizeItem)">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <ion-label>{{sizeItem.quantityAdded}}</ion-label>
+      <ion-button (click)="addItem(sizeItem)" [disabled]="sizeItem.quantityAdded >= sizeItem.quantity">
+        <ion-icon name="add" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-item>
+</ion-content>

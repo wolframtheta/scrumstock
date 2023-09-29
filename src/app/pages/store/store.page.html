@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>{{store?.name}}</ion-title>
+    <ion-back-button defaultHref="/home" slot="start"></ion-back-button>
+    <ion-img [src]="store?.img" slot="end"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-list>
+    <ion-item *ngFor="let log of logs" line="none" >
+      <ion-card class="w-full bg-blue-950" [routerLink]="[log.id]" [state]="{log}">
+        <ion-card-header>
+          Venta - {{log.client}} total: {{log.total}}
+        </ion-card-header>
+        <ion-card-content>
+          Realizado por: {{log.user?.username}}
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+</ion-content>

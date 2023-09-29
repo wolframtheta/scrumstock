@@ -1,0 +1,24 @@
+  <div class="flex flex-col gap-4 p-4" [formGroup]="form">
+    <ion-card-title>
+      Nuevo producto
+    </ion-card-title>
+    <ion-input
+      label="* Talla"
+      labelPlacement="floating"
+      placeholder="S, M, L..."
+      formControlName="name"
+      required
+      ></ion-input>
+
+      <ion-input
+      label="* Unidades"
+      labelPlacement="floating"
+      placeholder="1, 2, 3..."
+      type="number"
+      formControlName="quantity"
+      required
+      ></ion-input>
+      <ion-button shape="round" size="block" color="secondary"(click)="saveSize()" [disabled]="form.invalid">
+        <ion-icon name="save"></ion-icon>
+      </ion-button>
+</div>

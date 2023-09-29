@@ -24,3 +24,70 @@
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+ion-card-header {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+.bullet {
+  position: absolute;
+  height: 25px;
+  width: 25px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &.br {
+    bottom: 5%;
+    right: 5%;
+  }
+  &.bl {
+    bottom: 5%;
+    left: 5%;
+  }
+  &.tr {
+    top: 5%;
+    right: 5%;
+  }
+  &.tl {
+    top: 5%;
+    left: 5%;
+  }
+}
+
+.price {
+  color: white;
+}
+
+.quantity {
+  color: white
+}
+
+ion-card.ca{
+  margin: 5px;
+  border-radius: 10px;
+  width: 40vw!important;
+  height: 40vw!important;
+  aspect-ratio: 1/1;
+  background-color: var(--ion-color-tertiary)!important;
+  position: relative;
+  &.ca-btn {
+    background-color: transparent !important;
+    color: rgba(255, 255, 255, 0.842);
+    border: 2px solid var(--ion-color-tertiary)!important;
+  }
+}
+
+.modal-resized {
+  --width: fit-content;
+  --min-width: 350px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.4);
+}
