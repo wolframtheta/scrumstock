@@ -12,6 +12,9 @@
         <app-item-card [item]="item"></app-item-card>
       </ion-col>
     </ion-row>
+    <ion-row *ngIf="!items.length" class="text-center">
+      <ion-title>No hay artículos para vender</ion-title>
+    </ion-row>
   </ion-grid>
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <!-- <div class="bullet tr bg-red-500 z-50">

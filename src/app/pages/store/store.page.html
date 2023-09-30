@@ -2,7 +2,9 @@
   <ion-toolbar>
     <ion-title>{{store?.name}}</ion-title>
     <ion-back-button defaultHref="/home" slot="start"></ion-back-button>
-    <ion-img [src]="store?.img" slot="end"></ion-img>
+    <ion-avatar slot="end">
+      <ion-img [src]="store?.img" ></ion-img>
+    </ion-avatar>
   </ion-toolbar>
 </ion-header>
 
@@ -19,4 +21,5 @@
       </ion-card>
     </ion-item>
   </ion-list>
+  <ion-title *ngIf="!logs.length" class="text-center">No hay ventas realizadas</ion-title>
 </ion-content>

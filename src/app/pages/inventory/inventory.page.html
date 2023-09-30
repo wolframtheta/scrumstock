@@ -6,11 +6,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row>
+  <ion-grid class="h-full">
+    <ion-row class="h-64">
       <ion-col size="6" *ngFor="let item of items">
         <app-item-card [item]="item" [editMode]="editMode"></app-item-card>
       </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!items.length" class="text-center">
+      <ion-title>No hay artículos en el inventario</ion-title>
     </ion-row>
   </ion-grid>
 

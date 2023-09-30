@@ -8,6 +8,7 @@ import { ItemCardComponent } from 'src/app/components/item-card/item-card.compon
 import { Storage } from '@ionic/storage-angular';
 import { CreateItemComponent } from 'src/app/components/modals/create-item/create-item.component';
 import { ItemService } from 'src/app/services/item.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-inventory',
@@ -33,14 +34,10 @@ export class InventoryPage implements OnInit {
     private storage: Storage,
     private modalController: ModalController,
     private itemService: ItemService,
+    private utilsService: UtilsService
   ) { }
 
   async ngOnInit() {
-    this.selectedStore = await this.storage.get('selectedStore');
-
-    this.items = (await this.itemService.getItemsStore(this.selectedStore)).data
-
-    await this.storage.set('editMode', this.editMode);
   }
 
   async changeEditMode() {
@@ -68,10 +65,12 @@ export class InventoryPage implements OnInit {
   }
 
   async ionViewDidEnter() {
+    const loading = await this.utilsService.showLoading();
     this.selectedStore = await this.storage.get('selectedStore');
 
     this.items = (await this.itemService.getItemsStore(this.selectedStore)).data
 
     await this.storage.set('editMode', this.editMode);
+    loading.dismiss();
   }
 }

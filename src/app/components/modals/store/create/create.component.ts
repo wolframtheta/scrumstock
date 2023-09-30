@@ -37,7 +37,7 @@ export class StoreCreateComponent  implements OnInit {
     this.storeForm = this.formBuilder.group({
       name: ['', Validators.required],
       img: ['', Validators.required],
-      users: [(await this.authService.getToken()).user.username, Validators.required]
+      users: [(await this.authService.getToken()).user.id, Validators.required]
     })
   }
 

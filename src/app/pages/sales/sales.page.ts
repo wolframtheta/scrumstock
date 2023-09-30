@@ -10,6 +10,7 @@ import { CartService } from 'src/app/services/cart.service';
 import { BehaviorSubject } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ItemService } from 'src/app/services/item.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-sales',
@@ -37,12 +38,13 @@ export class SalesPage implements OnInit {
     private cartService: CartService,
     public navCtrl: NavController,
     private itemService: ItemService,
+    private utilsService: UtilsService
   ) {}
 
   async ngOnInit() {
-    this.cart = await this.storage.get(KEY_CART);
-    this.selectedStore = await this.storage.get('selectedStore');
-    this.items = (await this.itemService.getItemsStore(this.selectedStore)).data
+    // this.cart = await this.storage.get(KEY_CART);
+    // this.selectedStore = await this.storage.get('selectedStore');
+    // this.items = (await this.itemService.getItemsStore(this.selectedStore)).data
 
   }
 
@@ -60,9 +62,11 @@ export class SalesPage implements OnInit {
   }
 
   async ionViewDidEnter() {
+    const loading = await this.utilsService.showLoading();
     this.cart = await this.storage.get(KEY_CART);
     this.selectedStore = await this.storage.get('selectedStore');
     this.items = (await this.itemService.getItemsStore(this.selectedStore)).data
+    loading.dismiss();
   }
 
 }
