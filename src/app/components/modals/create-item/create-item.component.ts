@@ -10,6 +10,7 @@ import { NewItemFormComponent } from '../new-item-form/new-item-form.component';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { ItemService } from 'src/app/services/item.service';
 import { UtilsService } from 'src/app/services/utils.service';
+import { PhotoService } from 'src/app/services/photo.service';
 
 @Component({
   selector: 'app-create-item',
@@ -36,6 +37,7 @@ export class CreateItemComponent  implements OnInit {
     private storage: Storage,
     private itemService: ItemService,
     private utilsService: UtilsService,
+    private photoService: PhotoService
   ) {
     this.form = formBuilder.group({
       name: ['', Validators.required],
@@ -73,16 +75,13 @@ export class CreateItemComponent  implements OnInit {
   }
 
   async uploadPhoto() {
-    const photo = await Camera.getPhoto({
-      resultType: CameraResultType.Base64,
-      quality: 100,
-      width: 300,
-      height: 300
-    });
+    const photo = await this.photoService.takePhoto();
     console.log(photo)
-    this.form.patchValue({
-      img: `data:image/${photo.format};base64,${photo.base64String}`
-    })
+    if (photo.base64String) {
+      this.form.patchValue({
+        img: `data:image/${photo.format};base64,${await this.photoService.compressBase64(photo.base64String, 1, 500, 500)}`
+      })
+    }
   }
 
   async createElement() {
