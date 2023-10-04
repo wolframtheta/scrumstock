@@ -56,7 +56,7 @@ export class InventoryPage implements OnInit {
 
     const res = (await modal.onDidDismiss()).data;
     if (res) {
-      console.log('add');
+      this.loadPage();
     }
   }
 
@@ -65,6 +65,10 @@ export class InventoryPage implements OnInit {
   }
 
   async ionViewDidEnter() {
+    await this.loadPage();
+  }
+
+  async loadPage() {
     const loading = await this.utilsService.showLoading();
     this.selectedStore = await this.storage.get('selectedStore');
 
@@ -72,5 +76,6 @@ export class InventoryPage implements OnInit {
 
     await this.storage.set('editMode', this.editMode);
     loading.dismiss();
+
   }
 }

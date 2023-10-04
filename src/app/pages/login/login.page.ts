@@ -42,6 +42,9 @@ export class LoginPage implements OnInit {
       const res: any = await this.authService.login(body);
       console.log(res)
       await this.storage.set('token', res);
+      const userMe = await this.authService.getMe();
+      res.user = userMe;
+      await this.storage.set('token', res);
       this.navController.navigateForward('/home')
     } catch {
       this.isLoading = false;

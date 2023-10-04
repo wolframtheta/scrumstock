@@ -1,14 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-
-    namespace 'app.scrumstock.com'
-  compileSdk 33
-  defaultConfig {
-        applicationId "io.ionic.starter"
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "scrumstock.com"
         minSdkVersion rootProject.ext.minSdkVersion
-    targetSdk 33
-    versionCode 1
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {

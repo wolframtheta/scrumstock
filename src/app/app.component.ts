@@ -47,11 +47,6 @@ export class AppComponent {
       await this.storage.set(KEY_CART, cart);
     }
 
-    const idApp = await this.storage.get('idApp');
-    if (!idApp) {
-      await this.storage.set('idApp', 100);
-    }
-
     const user = await this.authService.getToken();
     console.log(user);
   }

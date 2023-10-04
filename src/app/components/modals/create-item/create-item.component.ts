@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
 import { TYPES_PRODUCT } from 'src/app/core/constants/general';
@@ -9,6 +9,7 @@ import { SwiperModule } from 'swiper/angular';
 import { NewItemFormComponent } from '../new-item-form/new-item-form.component';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { ItemService } from 'src/app/services/item.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-create-item',
@@ -33,28 +34,41 @@ export class CreateItemComponent  implements OnInit {
     private modalCtrl: ModalController,
     private formBuilder: FormBuilder,
     private storage: Storage,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private utilsService: UtilsService,
   ) {
     this.form = formBuilder.group({
-      name: [''],
-      price: [''],
+      name: ['', Validators.required],
+      price: ['', Validators.required],
       typeProduct: [TYPES_PRODUCT.SIZES],
-      quantity: [''],
-      photo: [''],
-      sizes: ['']
+      quantity: [0, Validators.required],
+      img: [''],
+      sizes: [''],
+      id: ['', Validators.required],
+      cost: ['']
     });
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    const loading = await this.utilsService.showLoading()
+    let idApp = await this.utilsService.getIdApp();
+    this.form.patchValue({
+      id: ++idApp
+    });
+    await this.utilsService.setIdApp(idApp);
+    loading.dismiss();
+  }
 
   cancel() {
     return this.modalCtrl.dismiss();
   }
 
   async confirm() {
-    const selectedStore = await this.storage.get('selectedStore');
+    const loading = await this.utilsService.showLoading();
 
+    const selectedStore = await this.storage.get('selectedStore');
     const res = await this.itemService.createItemStore(Number(selectedStore), this.form.value);
+    loading.dismiss();
     return this.modalCtrl.dismiss(true);
   }
 
@@ -63,9 +77,9 @@ export class CreateItemComponent  implements OnInit {
       resultType: CameraResultType.Base64,
       quality: 100
     });
-    console.log(photo);
+    console.log(photo)
     this.form.patchValue({
-      photo: `data:image/${photo.format};base64,${photo.base64String}`
+      img: `data:image/${photo.format};base64,${photo.base64String}`
     })
   }
 
@@ -84,16 +98,21 @@ export class CreateItemComponent  implements OnInit {
   }
 
   async saveSize(item: any) {
-    let idApp = await this.storage.get('idApp');
-      await this.storage.set('idApp', ++idApp)
-      const newSize: SizeItem = {
-        id: ++idApp,
-        idFather: idApp,
-        name: item.name,
-        quantity: item.quantity
-      }
-      await this.storage.set('idApp', ++idApp)
-      this.sizes.push(newSize);
+    const loading = await this.utilsService.showLoading()
+    let idApp = await this.utilsService.getIdApp();
+    const newSize: SizeItem = {
+      id: ++idApp,
+      idFather: this.form.get('id')?.value,
+      name: item.name,
+      quantity: item.quantity
+    }
+    await this.utilsService.setIdApp(idApp);
+    this.sizes.push(newSize);
+    this.form.patchValue({
+      sizes: this.sizes,
+      quantity: item.quantity + Number(this.form.get('quantity')?.value)
+    })
+    loading.dismiss();
   }
 
 }

@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Añadir producto</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+      <ion-button (click)="confirm()" [strong]="true" [disabled]="form.invalid">Confirm</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -37,7 +37,23 @@
             labelPlacement="floating"
             clearInput="true"
             fill="outline"
-            placeholder="3, 5, 10..."
+            placeholder="3€, 5€, 10€..."
+            color="primary"
+            shape="round"
+            type="number">
+          </ion-input>
+        </ion-column>
+      </ion-row>
+      <ion-row class="pb-4">
+        <ion-column class="w-full">
+          <ion-input
+            formControlName="cost"
+            mode="md"
+            label="Coste"
+            labelPlacement="floating"
+            clearInput="true"
+            fill="outline"
+            placeholder="1€, 2€, 3€..."
             color="primary"
             shape="round"
             type="number">
@@ -48,7 +64,7 @@
         <ion-column>
           <ion-button (click)="uploadPhoto()">Subir foto</ion-button>
 
-          <ion-img *ngIf="form.get('photo')?.value"[src]="form.get('photo')?.value"></ion-img>
+          <ion-img *ngIf="form.get('img')?.value"[src]="form.get('img')?.value"></ion-img>
         </ion-column>
       </ion-row>
       <ion-row class="pb-4">

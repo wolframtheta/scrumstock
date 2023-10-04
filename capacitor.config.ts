@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'scrumstock.com',
   appName: 'scrumstock',
   webDir: 'www',
   bundledWebRuntime: false

@@ -1,7 +1,7 @@
 {
   "name": "scrumstock",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Xavier Marques",
   "homepage": "https://ionicframework.com/",
   "scripts": {
     "ng": "ng",

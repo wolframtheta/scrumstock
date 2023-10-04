@@ -28,7 +28,11 @@ export class AuthService {
   }
 
   async login(body: LoginDTO) {
-    return lastValueFrom(this.httpClient.post(`${environment.urlServer}/auth/local`, body))
+    return lastValueFrom(this.httpClient.post(`${environment.urlServer}/auth/local?populate=*`, body))
+  }
+
+  getMe() {
+    return lastValueFrom(this.httpClient.get(`${environment.urlServer}/users/me?populate=*`));
   }
 
   async logout() {
@@ -39,5 +43,14 @@ export class AuthService {
   async getToken() {
     const token = await this.storage.get('token');
     return token;
+  }
+
+  async isRole(role: string | string[]): Promise<boolean> {
+    const token = await this.storage.get('token');
+    if (typeof role === 'string') {
+      return token.user.role.type === role;
+    } else {
+      return role.some(r => r === token.user.role.type);
+    }
   }
 }

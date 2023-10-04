@@ -10,6 +10,10 @@ import { StoreCreateComponent } from 'src/app/components/modals/store/create/cre
 import { FileService } from 'src/app/services/file.service';
 import { FileDTO } from 'src/app/core/dtos/file.dto';
 import { Storage } from '@ionic/storage-angular';
+import { UtilsService } from 'src/app/services/utils.service';
+import { ConfigServiceService } from 'src/app/services/config-service.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { ROLES } from 'src/app/core/constants/general';
 
 @Component({
   selector: 'app-home',
@@ -21,20 +25,33 @@ import { Storage } from '@ionic/storage-angular';
 export class HomePage implements OnInit {
 
   stores!: StoreDTO[];
+  ROLES = ROLES;
+  isRole: boolean = false;
   constructor(
     private storeService: StoreService,
     private modalController: ModalController,
     private storage: Storage,
-    private navController: NavController
+    private navController: NavController,
+    private utilsService: UtilsService,
+    private configService: ConfigServiceService,
+    public authService: AuthService
   ) { }
 
-  ngOnInit() {
-    this.loadPage();
+  async ngOnInit() {
+    const loading = await this.utilsService.showLoading();
+    this.isRole = await this.authService.isRole(ROLES.ADMIN)
+    await this.loadPage();
+    loading.dismiss();
   }
 
   async loadPage() {
     this.stores = (await this.storeService.getStoresByMe());
-
+    const configService = (await this.configService.getConfigServiceByKey('idApp')).data;
+    console.log(configService)
+    if (configService.length > 0) {
+      ++configService[0].attributes.value;
+      await this.configService.updateConfigService(configService[0].attributes, configService[0].id);
+    }
   }
 
   async createStore() {

@@ -45,7 +45,7 @@ export class ItemCardComponent  implements OnInit {
     if (!this.salesItem) {
       this.salesItem = this.mapperService.itemDTOToSalesItemDTO(this.item);
       const cart: CartDTO = await this.cartService.getGeneralCart();
-      const findItemCart = cart.items.find((item: SalesItemDTO) => item.id === this.item.id || item.idFather === this.item.id);
+      const findItemCart = cart.items?.find((item: SalesItemDTO) => item.id === this.item.id || item.idFather === this.item.id);
       this.salesItem = this.mapperService.itemDTOToSalesItemDTO(this.item, findItemCart);
       if (this.item.sizes?.length) {
         this.salesItem.idFather = this.item.id;
@@ -82,7 +82,7 @@ export class ItemCardComponent  implements OnInit {
           mergedCart.total = prices.reduce((prev, item) => prev + item)
           await this.storage.set(KEY_CART, mergedCart);
           debugger
-          this.salesItem.isAdded = mergedCart.items.some((item: SalesItemDTO) => item.idFather === this.salesItem.id);
+          this.salesItem.isAdded = mergedCart.items.some((item: SalesItemDTO) => item.id === this.salesItem.id);
         }
       });
     } else {

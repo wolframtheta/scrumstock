@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package scrumstock.com;
 
 import com.getcapacitor.BridgeActivity;
 

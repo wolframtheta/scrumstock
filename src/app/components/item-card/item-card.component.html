@@ -1,5 +1,6 @@
-<ion-card class="h-64 flex flex-col justify-between">
-  <div [routerLink]="router.url.includes('inventory') ? [item.id] : router.url" [state]="{item}">
+<ion-card class="h-64 flex flex-col justify-between"
+[routerLink]="router.url.includes('inventory') ? [item.id] : router.url" [state]="{item}">
+  <div >
     <ion-card-header>
       <span>{{item.name}}</span>
     </ion-card-header>

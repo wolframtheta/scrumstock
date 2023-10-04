@@ -54,7 +54,6 @@ export class StoreCreateComponent  implements OnInit {
       resultType: CameraResultType.Base64,
       quality: 100
     });
-    console.log(photo);
     this.storeForm.patchValue({
       img: `data:image/${photo.format};base64,${photo.base64String}`
     })

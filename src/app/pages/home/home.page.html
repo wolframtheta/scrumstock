@@ -21,7 +21,7 @@
     </ion-item>
   </ion-list>
 </ion-content>
-<ion-footer class="flex justify-between">
+<ion-footer class="flex justify-between" *ngIf="isRole">
     <ion-button class="w-full" (click)="createStore()" shape="round" expand="block">Crear</ion-button>
     <ion-button class="w-full" (click)="joinStore()" shape="round" expand="block">Unirse</ion-button>
 

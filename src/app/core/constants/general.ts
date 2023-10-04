@@ -81,3 +81,8 @@ export enum TYPES_LOG {
   MODIFICATION = 'modification',
   ADMIN = 'admin'
 }
+
+export enum ROLES {
+  ADMIN = 'authenticated',
+  MERXAN = 'merxan'
+}
