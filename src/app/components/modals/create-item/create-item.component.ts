@@ -81,6 +81,7 @@ export class CreateItemComponent  implements OnInit {
       this.form.patchValue({
         img: `data:image/${photo.format};base64,${await this.photoService.compressBase64(photo.base64String, 1, 500, 500)}`
       })
+      console.log(this.form.value);
     }
   }
 
