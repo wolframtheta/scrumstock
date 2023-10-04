@@ -75,7 +75,9 @@ export class CreateItemComponent  implements OnInit {
   async uploadPhoto() {
     const photo = await Camera.getPhoto({
       resultType: CameraResultType.Base64,
-      quality: 100
+      quality: 100,
+      width: 300,
+      height: 300
     });
     console.log(photo)
     this.form.patchValue({
