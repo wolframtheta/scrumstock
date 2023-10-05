@@ -76,12 +76,10 @@ export class CreateItemComponent  implements OnInit {
 
   async uploadPhoto() {
     const photo = await this.photoService.takePhoto();
-    console.log(photo)
     if (photo.base64String) {
       this.form.patchValue({
-        img: `data:image/${photo.format};base64,${await this.photoService.compressBase64(photo.base64String, 1, 500, 500)}`
+        img: `${await this.photoService.compressBase64(photo.base64String, 1, 500, 500)}`
       })
-      console.log(this.form.value);
     }
   }
 
