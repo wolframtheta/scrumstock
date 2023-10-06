@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   // urlServer: 'http://localhost:1337/api'
-  urlServer: 'https://scrumstock-be-70d7c4c50400.herokuapp.com/api'
+  urlServer: 'https://scrumstock-a74f35b36731.herokuapp.com/api'
 
 
 };
