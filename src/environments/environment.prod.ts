@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  urlServer: 'https://scrumstock-a74f35b36731.herokuapp.com/api'
+  urlServer: 'https://scrumstock-be-9127c07f1306.herokuapp.com/api'
 
 };
