@@ -11,6 +11,7 @@ import { KEY_CART } from 'src/app/core/constants/general';
 import { Storage } from '@ionic/storage-angular';
 import * as _ from 'lodash';
 import { ItemService } from 'src/app/services/item.service';
+import { PhotoService } from 'src/app/services/photo.service';
 @Component({
   selector: 'app-item-card',
   templateUrl: './item-card.component.html',
@@ -38,7 +39,8 @@ export class ItemCardComponent  implements OnInit {
     private modalController: ModalController,
     private cartService: CartService,
     private storage: Storage,
-    private itemService: ItemService
+    private itemService: ItemService,
+    private photoService: PhotoService
   ) { }
 
   async ngOnInit() {
@@ -99,6 +101,7 @@ export class ItemCardComponent  implements OnInit {
 
   async add(event?: any) {
     if (this.editMode) {
+      event.preventDefault();
       ++this.item.quantity;
       this.itemService.modifyItem(this.item);
     } else {
@@ -119,7 +122,5 @@ export class ItemCardComponent  implements OnInit {
     }
 
   }
-
-
 
 }

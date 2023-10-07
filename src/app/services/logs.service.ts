@@ -17,15 +17,17 @@ export class LogsService {
   ) { }
 
   async insertLog(log: LogDTO) {
-    const res: BasicDTO<LogDTO> = await lastValueFrom(this.httpClient.post<Promise<BasicDTO<LogDTO>>>(`${environment.urlServer}/logs`, {data: log}));
-    const users = {
-      connect: [(await this.authService.getToken()).user.id
-      ]
-    }
-    return lastValueFrom(this.httpClient.put(`${environment.urlServer}/logs/${res.data.id}`, {data: {users}}));
+    const user = (await this.authService.getToken()).user
+    log.user = user.id
+    return lastValueFrom(this.httpClient.post<Promise<BasicDTO<LogDTO>>>(`${environment.urlServer}/logs`, {data: log}));
+
   }
 
   getLogsByStore(idStore: number): Promise<BasicDTO<LogDTO[]>> {
     return lastValueFrom(this.httpClient.get<BasicDTO<LogDTO[]>>(`${environment.urlServer}/logs/${idStore}`));
+  }
+
+  updateLog(log: LogDTO) {
+    return lastValueFrom(this.httpClient.put<Promise<BasicDTO<LogDTO>>>(`${environment.urlServer}/logs/${log.id}`, {data: log}))
   }
 }

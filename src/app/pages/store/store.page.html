@@ -10,16 +10,26 @@
 
 <ion-content [fullscreen]="true">
   <ion-list>
-    <ion-item *ngFor="let log of logs" line="none" >
-      <ion-card class="w-full bg-blue-950" [routerLink]="[log.id]" [state]="{log}">
-        <ion-card-header>
-          Venta - {{log.client}} total: {{log.total}}
-        </ion-card-header>
-        <ion-card-content>
-          Realizado por: {{log.user?.username}}
-        </ion-card-content>
-      </ion-card>
-    </ion-item>
+    <ion-item-sliding *ngFor="let log of logs" line="none" (ionDrag)="markAsPaid($event, log)">
+      <ion-item >
+        <ion-card class="w-full bg-blue-950" [routerLink]="[log.id]" [state]="{log}">
+          <ion-card-header>
+            Venta - {{log.client}} total: {{log.total}}
+          </ion-card-header>
+          <ion-card-content>
+            <div class="flex justify-between">
+              <span>
+                Realizado por: {{log.user?.username}}
+              </span>
+              <span *ngIf="log.paid" class="uppercase text-green-600">Pagado</span>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option color="success">Pagar</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
   </ion-list>
   <ion-title *ngIf="!logs.length" class="text-center">No hay ventas realizadas</ion-title>
 </ion-content>

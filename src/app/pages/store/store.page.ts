@@ -43,4 +43,12 @@ export class StorePage implements OnInit {
     loading.dismiss();
   }
 
+  async markAsPaid(event: any, log: LogDTO) {
+    if (event.detail.ratio === -1) {
+      log.paid = true;
+      await this.logsService.updateLog(log);
+      event.target.close();
+    }
+  }
+
 }

@@ -10,7 +10,8 @@
 <ion-content [fullscreen]="true">
   <ion-card>
     <ion-card-content class="flex flex-col gap-3">
-      <ion-img [src]="item?.img"></ion-img>
+      <img [src]="item?.img"/>
+      <ion-button *ngIf="router.url.includes('inventory') && editMode" (click)="uploadPhoto()">Cambiar foto</ion-button>
       <div class="flex flex-col gap-3">
         <div class="text-xl">
           <ion-label class="font-bold">Precio: </ion-label>
@@ -25,7 +26,7 @@
             </ion-row>
             <ion-row *ngFor="let size of item?.sizes">
               <ion-col class="border-2 flex place-items-center justify-center">
-                <ion-label class="text-lg">{{size.name}}</ion-label>
+                <ion-input [disabled]="!editMode" class="text-lg" [value]="size.name" (ionChange)="changeNameItem($event, size)"></ion-input>
               </ion-col>
               <ion-col class="border-2 flex flex-row items-center justify-center gap-2">
                 <ion-button *ngIf="editMode" (click)="remove(size)" [disabled]="size.quantity <= 0">
@@ -37,7 +38,28 @@
                 </ion-button>
               </ion-col>
             </ion-row>
+            <ion-row>
+              <ion-button *ngIf="editMode" (click)="addNewSize(item)">
+                <ion-icon name="add"></ion-icon>
+              </ion-button>
+
+            </ion-row>
+            <!-- <ion-row>
+              <ion-col class="border-2 flex place-items-center justify-center">
+                <ion-input [disabled]="!editMode" class="text-lg" [value]="size.name" (ionChange)="changeNameItem($event, size)"></ion-input>
+              </ion-col>
+              <ion-col class="border-2 flex flex-row items-center justify-center gap-2">
+                <ion-button *ngIf="editMode" (click)="remove(size)" [disabled]="size.quantity <= 0">
+                  <ion-icon name="remove"></ion-icon>
+                </ion-button>
+                <ion-label class="text-lg">{{size.quantity}}</ion-label>
+                <ion-button *ngIf="editMode" (click)="add(size)">
+                  <ion-icon name="add"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row> -->
           </ion-grid>
+
           <div *ngIf="!item?.sizes" class="text-xl">
             <ion-label class="font-bold">Cantidad: </ion-label>
             <ion-label>{{item?.quantity}}</ion-label>

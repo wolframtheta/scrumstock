@@ -9,4 +9,5 @@ export interface LogDTO {
   user?: any;
   id?: number;
   data?: any;
+  paid?: boolean;
 }
