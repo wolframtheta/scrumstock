@@ -22,7 +22,7 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'detail',
-    loadComponent: () => import('./pages/store/detail/detail.page').then( m => m.DetailPage)
+    path: 'privacy',
+    loadComponent: () => import('./pages/privacy/privacy.page').then( m => m.PrivacyPage)
   },
 ];
