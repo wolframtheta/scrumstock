@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { IonicModule, NavController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { AuthService } from 'src/app/services/auth.service';
-import { LoginDTO } from 'src/app/core/dtos/login';
+import { LoginDTO, RegisterDTO } from 'src/app/core/dtos/login';
 import { Storage } from '@ionic/storage-angular';
 
 @Component({
@@ -17,11 +17,12 @@ import { Storage } from '@ionic/storage-angular';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup = this.formBuilder.group({
-    username: [environment.production ? '' : 'xaviermarques4f@gmail.com', Validators.required],
-    password: [environment.production ? '' : 'Aobcd8663', Validators.required]
+    username: ['John', [Validators.required, Validators.minLength(3)]],
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    email: ['', [Validators.email]]
   });
   isLoading = false;
-
+  registerMode = false;
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -35,7 +36,7 @@ export class LoginPage implements OnInit {
   async login() {
     this.isLoading = true;
     const body: LoginDTO = {
-      identifier: this.loginForm.get('username')?.value,
+      identifier: this.loginForm.get('email')?.value,
       password: this.loginForm.get('password')?.value
     }
     try {
@@ -50,6 +51,28 @@ export class LoginPage implements OnInit {
       this.isLoading = false;
     }
     this.isLoading = false;
+  }
+  async register() {
+    if (this.registerMode) {
+      const body: RegisterDTO = {
+        email: this.loginForm.get('email')?.value,
+        password: this.loginForm.get('password')?.value,
+        username: this.loginForm.get('username')?.value,
+        role: {
+          connect: [{id: 3, position: {end: true}}],
+          disconnect: []
+        },
+        confirmed: true,
+        blocked: false
+      }
+      await this.authService.register(body);
+      await this.login();
+    } else {
+      this.registerMode = true;
+      this.loginForm.patchValue({username: ''})
+    }
+
+    console.log('register')
   }
 
 }

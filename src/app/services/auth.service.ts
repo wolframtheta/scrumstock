@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { Storage } from '@ionic/storage-angular';
 import { lastValueFrom } from 'rxjs';
-import { LoginDTO } from '../core/dtos/login';
+import { LoginDTO, RegisterDTO } from '../core/dtos/login';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { NavController } from '@ionic/angular';
@@ -52,5 +52,9 @@ export class AuthService {
     } else {
       return role.some(r => r === token.user.role.type);
     }
+  }
+
+  register(body: RegisterDTO) {
+    return lastValueFrom(this.httpClient.post(`${environment.urlServer}/users`, body));
   }
 }

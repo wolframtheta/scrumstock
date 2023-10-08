@@ -23,7 +23,9 @@ export class TokenInterceptor implements HttpInterceptor {
       }
 
       async handle(request: HttpRequest<unknown>, next: HttpHandler) {
-        if (!request.url.includes('auth')) {
+        if ((request.url.includes('users') && request.method === 'POST')) {
+        return lastValueFrom(next.handle(request));
+        } else if (!(request.url.includes('auth')) ) {
           request = request.clone({
             setHeaders: {
               Authorization: `Bearer ${(await this.authService.getToken()).jwt}`
