@@ -9,8 +9,8 @@
 <ion-content [fullscreen]="true">
   <ion-title>Tiendas asociadas</ion-title>
   <ion-list>
-    <ion-item *ngFor="let store of stores">
-      <div [routerLink]="['/tabs', store.id, 'sales']">
+    <ion-item *ngFor="let store of stores" [routerLink]="['/tabs', store.id, 'sales']">
+      <div>
         <ion-label>
           {{ store.name }}
         </ion-label>
