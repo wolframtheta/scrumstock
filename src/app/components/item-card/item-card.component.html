@@ -1,11 +1,11 @@
-<ion-card class="h-64 flex flex-col justify-between"
+<ion-card class="flex flex-col justify-between h-72 max-h-72"
 [routerLink]="router.url.includes('inventory') ? [item.id] : router.url" [state]="{item}">
   <div >
     <ion-card-header>
       <span>{{item.name}}</span>
     </ion-card-header>
     <ion-card-content>
-      <ion-img [src]="item.img"></ion-img>
+      <ion-img [src]="item.img" class="max-h-32 h-32"></ion-img>
 
       <div class="bullet br bg-green-500">
         <span class="text-black">{{item.price}}€</span>

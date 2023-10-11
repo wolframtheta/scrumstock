@@ -6,8 +6,8 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-grid class="h-full">
-    <ion-row class="h-64">
+  <ion-grid class="h-full pb-10">
+    <ion-row>
       <ion-col size="6" *ngFor="let item of items">
         <app-item-card [item]="item" [editMode]="editMode"></app-item-card>
       </ion-col>

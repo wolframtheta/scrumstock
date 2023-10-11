@@ -44,6 +44,7 @@ export class StorePage implements OnInit {
   }
 
   async markAsPaid(event: any, log: LogDTO) {
+    console.log(event.detail.ratio)
     if (event.detail.ratio === -1) {
       log.paid = true;
       await this.logsService.updateLog(log);
