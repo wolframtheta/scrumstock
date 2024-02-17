@@ -1,5 +1,5 @@
-<ion-card class="flex flex-col justify-between h-72 max-h-72"
-[routerLink]="[item.id]" [disbled]="!(!editMode && router.url.includes('inventory'))" [state]="{item}">
+<ion-card *ngIf="!editMode" class="flex flex-col justify-between h-72 max-h-72"
+[routerLink]="[item.id]" [state]="{item}">
   <div >
     <ion-card-header>
       <span>{{item.name}}</span>
@@ -16,6 +16,57 @@
     </ion-card-content>
   </div>
   <ion-card-footer *ngIf="router.url.includes('inventory') && editMode && !salesItem.idFather">
+    <ion-buttons class="flex justify-center text-center mb-6">
+      <ion-button size="large" (click)="remove($event)" [disabled]="item.quantity <= 0">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <!-- <ion-title>{{salesItem.quantityAdded}}</ion-title> -->
+      <ion-button size="large" (click)="add($event)">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-card-footer>
+
+  <ion-card-header *ngIf="router.url.includes('inventory') && editMode && salesItem?.idFather">
+    <ion-button [routerLink]="[item.id]" [state]="{item}">Modificar</ion-button>
+  </ion-card-header>
+
+  <ion-card-header *ngIf="router.url.includes('sales') && salesItem?.idFather">
+    <ion-button *ngIf="!salesItem?.isAdded" (click)="addItem()" [disabled]="!salesItem.quantity">Añadir</ion-button>
+    <ion-button *ngIf="salesItem?.isAdded" (click)="addItem()">Modificar</ion-button>
+  </ion-card-header>
+
+  <ion-card-header *ngIf="router.url.includes('sales') && !salesItem?.idFather">
+    <ion-buttons class="flex justify-center text-center mb-2">
+      <ion-button size="large" (click)="remove()" [disabled]="salesItem.quantityAdded <= 0">
+        <ion-icon name="remove"></ion-icon>
+      </ion-button>
+      <ion-title>{{salesItem.quantityAdded}}</ion-title>
+      <ion-button size="large" (click)="add()" [disabled]="salesItem.quantityAdded >= salesItem.quantity">
+        <ion-icon name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-card-header>
+</ion-card>
+
+<ion-card *ngIf="editMode" class="flex flex-col justify-between h-72 max-h-72">
+  <div >
+    <ion-card-header>
+      <span>{{item.name}}</span>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-img [src]="item.img" class="max-h-32 h-32"></ion-img>
+
+      <div class="bullet br bg-green-500">
+        <span class="text-black">{{item.price}}€</span>
+      </div>
+      <div class="bullet bl bg-red-500">
+        <span class="text-white">{{item.quantity}}</span>
+      </div>
+    </ion-card-content>
+  </div>
+  <ion-card-footer *ngIf="router.url.includes('inventory') && editMode && !salesItem.idFather" class="flex flex-col justify-center">
+    <ion-button [routerLink]="[item.id]" [state]="{item}">Modificar</ion-button>
     <ion-buttons class="flex justify-center text-center mb-6">
       <ion-button size="large" (click)="remove($event)" [disabled]="item.quantity <= 0">
         <ion-icon name="remove"></ion-icon>
