@@ -30,4 +30,8 @@ export class LogsService {
   updateLog(log: LogDTO) {
     return lastValueFrom(this.httpClient.put<Promise<BasicDTO<LogDTO>>>(`${environment.urlServer}/logs/${log.id}`, {data: log}))
   }
+
+  deleteLog(log: LogDTO) {
+    return lastValueFrom(this.httpClient.delete<Promise<BasicDTO<LogDTO>>>(`${environment.urlServer}/logs/${log.id}`))
+  }
 }

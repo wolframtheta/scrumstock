@@ -9,6 +9,8 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { LogsService } from 'src/app/services/logs.service';
 import { LogDTO } from 'src/app/core/dtos/log.dto';
 import { UtilsService } from 'src/app/services/utils.service';
+import { ItemService } from 'src/app/services/item.service';
+import { SalesItemDTO } from 'src/app/core/dtos/items';
 
 @Component({
   selector: 'app-store',
@@ -24,7 +26,8 @@ export class StorePage implements OnInit {
     private storage: Storage,
     private storeService: StoreService,
     private logsService: LogsService,
-    private utilsService: UtilsService
+    private utilsService: UtilsService,
+    private itemService: ItemService,
   ) { }
 
   store!: StoreDTO;
@@ -44,11 +47,21 @@ export class StorePage implements OnInit {
   }
 
   async markAsPaid(event: any, log: LogDTO) {
-    console.log(event.detail.ratio)
-    if (event.detail.ratio === -1) {
       log.paid = true;
       await this.logsService.updateLog(log);
       event.target.close();
+  }
+
+  async deleteSale(event: any, log: LogDTO) {
+    await this.logsService.deleteLog(log);
+    this.loadPage();
+  }
+
+  async dragSlide(event: any, log: LogDTO) {
+    if (event.detail.ratio === -1) {
+      await this.markAsPaid(event, log);
+    } else if (event.detail.ratio === 1) {
+      await this.deleteSale(event, log);
     }
   }
 

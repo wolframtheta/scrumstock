@@ -12,6 +12,7 @@ import { LogDTO } from 'src/app/core/dtos/log.dto';
 import { AuthService } from 'src/app/services/auth.service';
 import { StoreService } from 'src/app/services/store.service';
 import { TicketSaleComponent } from 'src/app/components/ticket-sale/ticket-sale.component';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-checkout',
@@ -23,7 +24,7 @@ import { TicketSaleComponent } from 'src/app/components/ticket-sale/ticket-sale.
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    TicketSaleComponent
+    TicketSaleComponent,
   ]
 })
 export class CheckoutPage implements OnInit {
@@ -42,7 +43,8 @@ export class CheckoutPage implements OnInit {
     private formBuilder: FormBuilder,
     private logsService: LogsService,
     private authService: AuthService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private utilsService: UtilsService,
   ) {
     this.form = this.formBuilder.group({
       client: ['', Validators.required]
@@ -71,6 +73,7 @@ export class CheckoutPage implements OnInit {
   }
 
   async confirmSale(event: any) {
+    const loading = await this.utilsService.showLoading();
     const action = event.detail.role;
     if (action === YES_NO_ALERT_BUTTONS[1].role) {
       console.log(this.cart);
@@ -91,6 +94,7 @@ export class CheckoutPage implements OnInit {
       }
       await this.logsService.insertLog(log);
       await this.resetCart();
+      loading.dismiss();
       this.navController.navigateRoot(`/tabs/${this.selectedStore}/sales`)
     }
   }
