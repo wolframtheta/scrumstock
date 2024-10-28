@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { LogDTO } from '../core/dtos/log.dto';
 import { lastValueFrom } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { BasicDTO } from '../core/dtos/basic.dto';
+import { BasicDTO, NativeDTO } from '../core/dtos/basic.dto';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -23,8 +23,8 @@ export class LogsService {
 
   }
 
-  getLogsByStore(idStore: number): Promise<BasicDTO<LogDTO[]>> {
-    return lastValueFrom(this.httpClient.get<BasicDTO<LogDTO[]>>(`${environment.urlServer}/logs/${idStore}`));
+  getLogsByStore(idStore: number): Promise<NativeDTO<LogDTO[]>> {
+    return lastValueFrom(this.httpClient.get<NativeDTO<LogDTO[]>>(`${environment.urlServer}/logs/?filters[$and][0][store][id][$eq]=${idStore}`));
   }
 
   updateLog(log: LogDTO) {

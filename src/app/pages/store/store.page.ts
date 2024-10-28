@@ -42,7 +42,7 @@ export class StorePage implements OnInit {
   async loadPage() {
     const loading = await this.utilsService.showLoading();
     this.store = (await this.storeService.getStore(Number(await this.storage.get('selectedStore')))).data;
-    this.logs = ((await this.logsService.getLogsByStore(this.store.id)).data).sort((a, b) => (b.id ?? 0) - (a.id ?? 0));
+    this.logs = (await this.logsService.getLogsByStore(this.store.id)).data.sort((a, b) => (b.id ?? 0) - (a.id ?? 0)).map(a => a.attributes);
     loading.dismiss();
   }
 
